@@ -1,7 +1,6 @@
-package net.webChat.chat.model;
+package net.webChat.registration.model;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "messages")
@@ -20,8 +19,7 @@ public class Message {
     @Column(name = "message")
     private String message;
 
-    @Column(name = "date")
-    private Date   date;
+
 
     public Long getId() {
         return id;
@@ -55,14 +53,6 @@ public class Message {
         this.message = message;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
     @Override
     public String toString() {
         return "Message{" +
@@ -70,7 +60,6 @@ public class Message {
                 ", user_id=" + user_id +
                 ", username='" + username + '\'' +
                 ", message='" + message + '\'' +
-                ", date=" + date +
                 '}';
     }
 }
