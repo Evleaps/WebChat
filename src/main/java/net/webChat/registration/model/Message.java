@@ -20,7 +20,6 @@ public class Message {
     private String message;
 
 
-
     public Long getId() {
         return id;
     }
@@ -51,15 +50,5 @@ public class Message {
 
     public void setMessage(String message) {
         this.message = message;
-    }
-
-    @Override
-    public String toString() {
-        return "Message{" +
-                "id=" + id +
-                ", user_id=" + user_id +
-                ", username='" + username + '\'' +
-                ", message='" + message + '\'' +
-                '}';
     }
 }

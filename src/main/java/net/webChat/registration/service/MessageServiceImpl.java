@@ -1,3 +1,4 @@
+
 package net.webChat.registration.service;
 
 import net.webChat.registration.dao.MessageDao;
@@ -13,12 +14,8 @@ public class MessageServiceImpl implements MessageService {
     private MessageDao messageDao;
 
     @Override
-    public void addMessage(Message message) {
+    public void save(Message message) {
         messageDao.save (message);
     }
-
-    @Override
-    public Message findByMessageName(String messageName) {
-        return messageDao.findByMessageName (messageName);
-    }
 }
+

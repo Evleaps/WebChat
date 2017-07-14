@@ -78,7 +78,6 @@ public class UserController {
         return "chat";
     }
 ///////////////////////////////////////////////////////////////////////////////
-    /** При получении запроса "/" переводим на страницу с чатом*/
     @RequestMapping(value = "chat", method = RequestMethod.GET)
     public String theChat(Model model) {
         model.addAttribute("/message", new Message ());
@@ -86,17 +85,17 @@ public class UserController {
     }
 
     @RequestMapping(value = "/chat/add", method = RequestMethod.POST)
-    public String addBook(@ModelAttribute("chat") Message message){
+    public String addBook(@ModelAttribute("chat") Message message, Model model){
         if(message.getId() == 0){
-            messageService.addMessage (message);
+            messageService.save (message);
         }
 
         return "redirect:/books";
     }
 
-    @RequestMapping(value = "/registration", method = RequestMethod.POST)
+   /* @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public String registration(@ModelAttribute("messageForm") Message message, BindingResult bindingResult, Model model) {
 
         return "chat";
-    }
+    }*/
 }
