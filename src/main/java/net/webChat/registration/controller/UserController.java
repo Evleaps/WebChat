@@ -42,25 +42,25 @@ public class UserController {
             model.addAttribute("message", "Logged out successfully.");
         }
 
-        return "registration/login";
+        return "login";
     }
 
     /** Если все хорошо, переводим на страницу самого чата*/
     @RequestMapping(value = {"/"}, method = RequestMethod.GET)
     public String welcome(Model model) {
-        return "chat/chat";
+        return "chat";
     }
 
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
     public String admin(Model model) {
-        return "registration/admin";
+        return "admin";
     }
 
     /** При получении запроса "/registration" переводим на соответствующую страницу*/
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) {
         model.addAttribute("userForm", new User());
-        return "registration/registration";
+        return "registration";
     }
 
     /** Получаем данные, делегируем проверку сервисам и переводим на страницу чата*/
@@ -69,20 +69,20 @@ public class UserController {
         userValidator.validate(userForm, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            return "registration/registration";
+            return "registration";
         }
 
         userService.save(userForm);
         securityService.autoLogin(userForm.getUsername(), userForm.getConfirmPassword());
 
-        return "chat/chat";
+        return "chat";
     }
 ///////////////////////////////////////////////////////////////////////////////
     /** При получении запроса "/" переводим на страницу с чатом*/
     @RequestMapping(value = "chat", method = RequestMethod.GET)
     public String theChat(Model model) {
         model.addAttribute("/message", new Message ());
-        return "chat/chat";
+        return "chat";
     }
 
     @RequestMapping(value = "/chat/add", method = RequestMethod.POST)
@@ -97,6 +97,6 @@ public class UserController {
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public String registration(@ModelAttribute("messageForm") Message message, BindingResult bindingResult, Model model) {
 
-        return "chat/chat";
+        return "chat";
     }
 }
