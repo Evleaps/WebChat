@@ -16,6 +16,8 @@ import java.util.Set;
 
 /**
  * Implementation of {@link org.springframework.security.core.userdetails.UserDetailsService} interface.
+ *
+ * В этом классе мы даем разрешения, т.е. указываем какие роли будут у пользователя
  */
 
 

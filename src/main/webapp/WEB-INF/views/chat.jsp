@@ -28,6 +28,7 @@
 
 <%--НАВИГАЦИОННЫЙ БАР, ШТОРКА--%>
 <nav class="navbar navbar-inverse navbar-fixed-top">
+
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
@@ -36,13 +37,20 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">MERA school 2K17</a>
+            <a class="navbar-brand" href="">MERA school 2K17</a>
         </div>
 
         <div class="collapse navbar-collapse" id="navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Log out</a></li>
+                <%--Тут мы проверяем есть ли есть ли пользователь и обнуляем действующую активность. Т.е. logout--%>
+                <c:if test="${pageContext.request.userPrincipal.name != null}">
+                    <form id="logoutForm" method="POST" action="${contextPath}/logout">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    </form>
+                    <li><a onclick="document.forms['logoutForm'].submit()">Log out</a></li>
+                </c:if>
             </ul>
+
             <form class="navbar-form navbar-right" role="search">
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="Search message..">
@@ -51,6 +59,7 @@
             </form>
         </div>
     </div>
+
 </nav>
 <%--НАВИГАЦИОННЫЙ БАР, ШТОРКА - КОНЕЦ--%>
 <br>
@@ -78,23 +87,16 @@
                     <div class="member_list">
                         <ul class="list-unstyled">
                             <li class="left clearfix">
-                     <span class="chat-img pull-left"></span>
-
+                                <%--Вывод всех пользователей из БД--%>
+                                <c:forEach items="${allInstanceUsers}" var="allInstanceUsers">
+                                <span class="chat-img pull-left"></span>
                                 <div class="chat-body clearfix">
                                     <div class="header_sec">
-                                        <strong class="primary-font">One people</strong>
+                                        <strong class="primary-font">${allInstanceUsers.username}</strong>
                                     </div>
                                 </div>
                             </li>
-                            <li class="left clearfix">
-                     <span class="chat-img pull-left">
-                     </span>
-                                <div class="chat-body clearfix">
-                                    <div class="header_sec">
-                                        <strong class="primary-font">Two people </strong>
-                                    </div>
-                                </div>
-                            </li>
+                            </c:forEach>
                         </ul>
                     </div>
                 </div>

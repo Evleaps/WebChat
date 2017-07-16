@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -70,6 +72,8 @@ public class UserController {
             return "registration";
         }
 
+
+
         userService.save(userForm);
         securityService.autoLogin(userForm.getUsername(), userForm.getConfirmPassword());
 
@@ -82,8 +86,10 @@ public class UserController {
     @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
     public String welcome(Model model) {
         List<Message> allInstanceMessages = messageService.getAllMessages ();
+        List<User> allInstanceUsers = userService.getAllUsers ();
+        model.addAttribute ("allInstanceUsers", allInstanceUsers);//jsp увидит поля всех инстансов User
         model.addAttribute ("allInstanceMessages", allInstanceMessages);//jsp увидит поля всех инстансов Message
-        model.addAttribute("messageForm", new Message ());//отправляем в конструктор
+        model.addAttribute ("messageForm", new Message ());//отправляем в конструктор
         return "chat";
     }
 
