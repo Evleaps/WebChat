@@ -22,9 +22,7 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 
 </head>
-
 <body>
-
 <div class="container">
 
     <form method="POST" action="${contextPath}/login" class="form-signin">

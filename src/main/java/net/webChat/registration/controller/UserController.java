@@ -46,7 +46,7 @@ public class UserController {
     }
 
     /** Если все хорошо, переводим на страницу самого чата*/
-    @RequestMapping(value = {"/"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
     public String welcome(Model model) {
         return "chat";
     }
@@ -56,6 +56,7 @@ public class UserController {
         return "admin";
     }
 
+///////////////////////////////////////////////////Регистрация
     /** При получении запроса "/registration" переводим на соответствующую страницу*/
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) {
@@ -80,22 +81,16 @@ public class UserController {
 ///////////////////////////////////////////////////////////////////////////////
     @RequestMapping(value = "chat", method = RequestMethod.GET)
     public String theChat(Model model) {
-        model.addAttribute("/message", new Message ());
+        model.addAttribute("messageForm", new Message ());
         return "chat";
     }
 
     @RequestMapping(value = "/chat/add", method = RequestMethod.POST)
-    public String addBook(@ModelAttribute("chat") Message message, Model model){
-        if(message.getId() == 0){
-            messageService.save (message);
+    public String addBook(@ModelAttribute("messageForm") Message messageForm, Model model){
+        if(messageForm.getId() == 0){
+            messageService.save (messageForm);
         }
 
-        return "redirect:/books";
+        return "redirect:/chat";
     }
-
-   /* @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String registration(@ModelAttribute("messageForm") Message message, BindingResult bindingResult, Model model) {
-
-        return "chat";
-    }*/
 }

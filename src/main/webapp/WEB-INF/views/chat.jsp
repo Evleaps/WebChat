@@ -122,7 +122,6 @@
                             </li>
                             <li class="left clearfix">
                      <span class="chat-img1 pull-left">
-
                      </span>
                                 <div class="chat-body1 clearfix">
                                     <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots
@@ -132,17 +131,22 @@
                                     <div class="chat_time pull-right">09:40PM</div>
                                 </div>
                             </li>
-
-                            <%--Форма для отображения сообщений КОНЕЦ--%>
-
                         </ul>
                     </div><!--chat_area-->
-                    <div class="message_write">
-                        <textarea class="form-control" placeholder="Your message.."></textarea>
-                        <div class="clearfix"></div>
-                        <div class="chat_bottom">
-                            <a href="#" class="pull-right btn btn-primary">Send</a></div>
-                    </div>
+                    <%--Форма для отображения сообщений КОНЕЦ--%>
+                    <form:form method="POST" modelAttribute="messageForm">
+                        <div class="message_write">
+                            <textarea path="message" class="form-control"
+                                           placeholder="Your message.."></textarea>
+                            <div class="clearfix"></div>
+                            <div class="chat_bottom">
+                                <button class="pull-right btn btn-primary" type="submit">Send</button>
+                                <a href="/chat" class="pull-left btn btn-primary">Refresh</a>
+                            </div>
+                        </div>
+                    </form:form>
+
+
                 </div>
             </div>
         </div>
