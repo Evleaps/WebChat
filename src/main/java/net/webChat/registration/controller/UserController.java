@@ -7,12 +7,16 @@ import net.webChat.registration.service.SecurityService;
 import net.webChat.registration.service.UserService;
 import net.webChat.registration.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * Controller for {@link net.webChat.registration.model.User}'s pages.
@@ -29,9 +33,7 @@ public class UserController {
     @Autowired
     private MessageService messageService;
 
-
-
-    /** Первая страница, проверяем на наличае ошибок*/
+    /* Первая страница, проверяем на наличае ошибок*/
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(Model model, String error, String logout) {
         if (error != null) {
@@ -45,26 +47,21 @@ public class UserController {
         return "login";
     }
 
-    /** Если все хорошо, переводим на страницу самого чата*/
-    @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
-    public String welcome(Model model) {
-        return "chat";
-    }
 
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
     public String admin(Model model) {
         return "admin";
     }
 
-///////////////////////////////////////////////////Регистрация
-    /** При получении запроса "/registration" переводим на соответствующую страницу*/
+
+    /* При получении запроса "/registration" переводим на соответствующую страницу*/
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) {
         model.addAttribute("userForm", new User());
         return "registration";
     }
 
-    /** Получаем данные, делегируем проверку сервисам и переводим на страницу чата*/
+    /* Получаем данные, делегируем проверку сервисам и переводим на страницу чата*/
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
         userValidator.validate(userForm, bindingResult);
@@ -78,19 +75,29 @@ public class UserController {
 
         return "chat";
     }
-///////////////////////////////////////////////////////////////////////////////
-    @RequestMapping(value = "chat", method = RequestMethod.GET)
-    public String theChat(Model model) {
-        model.addAttribute("messageForm", new Message ());
+
+    /* Если все хорошо, переводим на страницу самого чата
+     * 1. передаем в jsp сообщения в виде List<Message> messages. В jsp он будет искаться по имени s: "messages"
+     * 2. передаем само сообщение, оно пустое и ничего не содержит, заполнять будем при сохранении*/
+    @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
+    public String welcome(Model model) {
+        List<Message> allInstanceMessages = messageService.getAllMessages ();
+        model.addAttribute ("allInstanceMessages", allInstanceMessages);//jsp увидит поля всех инстансов Message
+        model.addAttribute("messageForm", new Message ());//отправляем в конструктор
         return "chat";
     }
 
-    @RequestMapping(value = "/chat/add", method = RequestMethod.POST)
+    /*Тут мы принимаем наш атрибут, который ищется по имени messageForm и хранит в себе инстанс Message,
+       * проверка на null (Long obj)
+        * добавляем имя юзера
+        * добавляем дату и сохраняем в бд*/
+    @RequestMapping(value = "/chat", method = RequestMethod.POST)
     public String addBook(@ModelAttribute("messageForm") Message messageForm, Model model){
-        if(messageForm.getId() == 0){
+        if(messageForm.getId() == null){
+            messageForm.setUsername (SecurityContextHolder.getContext ().getAuthentication ().getName ());
+            messageForm.setDate (new Date ());
             messageService.save (messageForm);
         }
-
-        return "redirect:/chat";
+        return "redirect:/";
     }
 }

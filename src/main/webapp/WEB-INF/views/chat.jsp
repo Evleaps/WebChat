@@ -78,8 +78,8 @@
                     <div class="member_list">
                         <ul class="list-unstyled">
                             <li class="left clearfix">
-                     <span class="chat-img pull-left">
-                     </span>
+                     <span class="chat-img pull-left"></span>
+
                                 <div class="chat-body clearfix">
                                     <div class="header_sec">
                                         <strong class="primary-font">One people</strong>
@@ -103,52 +103,50 @@
             <!--СПИСОК ПОЛЬЗОВАТЕЛЕЙ КОНЕЦ-->
 
 
-            <%--Форма для отображения сообщений --%>
+            <%--ФОРМА ОТОБРАЖЕНИЯ и ВВОДА СООБЩЕНИЙ --%>
             <div class="col-sm-9 message_section">
                 <div class="row">
                     <div class="chat_area">
                         <ul class="list-unstyled">
                             <li class="left clearfix">
-                     <span class="chat-img1 pull-left">
 
-                     </span>
+                                <%--items мы указываем параметр из метода GET в контроллере, присваиваем ему имя
+                               var="" по которому мы можем обращаться к полям нашего акласса
+                               Соответственно будут выведены поля класса каждого инстанса пока они не закончатся--%>
+                                <c:forEach items="${allInstanceMessages}" var="allInstanceMessages">
+                                <span class="chat-img1 pull-left"></span>
                                 <div class="chat-body1 clearfix">
-                                    <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots
-                                        in a piece of classical Latin literature from 45 BC, making it over 2000 years
-                                        old. Richard McClintock, a Latin professor at Hampden-Sydney College in
-                                        Virginia.</p>
-                                    <div class="chat_time pull-right">09:40PM</div>
+                                    <p><b>${allInstanceMessages.username}</b>
+                                        <br>${allInstanceMessages.message}</p>
+                                    <div class="chat_time pull-right">${allInstanceMessages.date}</div>
                                 </div>
                             </li>
                             <li class="left clearfix">
-                     <span class="chat-img1 pull-left">
-                     </span>
-                                <div class="chat-body1 clearfix">
-                                    <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots
-                                        in a piece of classical Latin literature from 45 BC, making it over 2000 years
-                                        old. Richard McClintock, a Latin professor at Hampden-Sydney College in
-                                        Virginia.</p>
-                                    <div class="chat_time pull-right">09:40PM</div>
-                                </div>
+                                <span class="chat-img1 pull-left"></span>
+                                </c:forEach>
                             </li>
                         </ul>
                     </div><!--chat_area-->
                     <%--Форма для отображения сообщений КОНЕЦ--%>
-                    <form:form method="POST" modelAttribute="messageForm">
+
+                    <%--Ввод сообщений в textatea и отправка формы на сервер
+                    P.S. Форма отправляет данные на ту-же страницу на которой находимся,
+                    ModelAttribyte должен быть прописан и в GET и в POST, что бы знать, куда отправлять и откуда брать--%>
+                    <form:form action="/chat" method="POST" modelAttribute="messageForm">
                         <div class="message_write">
-                            <textarea path="message" class="form-control"
-                                           placeholder="Your message.."></textarea>
+                            <form:textarea path="message" class="form-control"
+                                           placeholder="Your message.."/><%--все параметры прописываются внутри формы--%>
                             <div class="clearfix"></div>
                             <div class="chat_bottom">
                                 <button class="pull-right btn btn-primary" type="submit">Send</button>
-                                <a href="/chat" class="pull-left btn btn-primary">Refresh</a>
+                                <a href="/" class="pull-left btn btn-primary">Refresh</a>
                             </div>
                         </div>
                     </form:form>
-
-
+                    <%--Ввод и отправка сообщений из формы КОНЕЦ--%>
                 </div>
             </div>
+            <%--Форма отображения и ввода сообщений КОНЕЦ--%>
         </div>
     </div>
 </div>
