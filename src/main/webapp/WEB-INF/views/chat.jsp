@@ -80,15 +80,14 @@
                 <div class="row">
                     <div class="dropdown all_conversation">
                         <button class="dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                            All users
+                                aria-haspopup="true" aria-expanded="false">All users
                         </button>
                     </div>
                     <div class="member_list">
                         <ul class="list-unstyled">
+                            <%--Вывод всех пользователей из БД--%>
+                            <c:forEach items="${allInstanceUsers}" var="allInstanceUsers">
                             <li class="left clearfix">
-                                <%--Вывод всех пользователей из БД--%>
-                                <c:forEach items="${allInstanceUsers}" var="allInstanceUsers">
                                 <span class="chat-img pull-left"></span>
                                 <div class="chat-body clearfix">
                                     <div class="header_sec">

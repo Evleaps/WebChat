@@ -77,7 +77,7 @@ public class UserController {
         userService.save(userForm);
         securityService.autoLogin(userForm.getUsername(), userForm.getConfirmPassword());
 
-        return "chat";
+        return "/chat";
     }
 
     /* Если все хорошо, переводим на страницу самого чата
@@ -92,6 +92,9 @@ public class UserController {
         model.addAttribute ("messageForm", new Message ());//отправляем в конструктор
         return "chat";
     }
+
+
+
 
     /*Тут мы принимаем наш атрибут, который ищется по имени messageForm и хранит в себе инстанс Message,
        * проверка на null (Long obj)
