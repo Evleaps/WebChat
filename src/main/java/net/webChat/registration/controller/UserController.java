@@ -59,25 +59,24 @@ public class UserController {
     /* При получении запроса "/registration" переводим на соответствующую страницу*/
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) {
-        model.addAttribute("userForm", new User());
+        model.addAttribute ("userForm", new User());
         return "registration";
     }
 
     /* Получаем данные, делегируем проверку сервисам и переводим на страницу чата*/
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
+    public String registration(@ModelAttribute("userForm") User userForm,
+                               BindingResult bindingResult, Model model) {
         userValidator.validate(userForm, bindingResult);
 
         if (bindingResult.hasErrors()) {
             return "registration";
         }
 
-
-
         userService.save(userForm);
         securityService.autoLogin(userForm.getUsername(), userForm.getConfirmPassword());
 
-        return "/chat";
+        return "redirect:/";//перенаправляем не на jsp, а на адресс "/"
     }
 
     /* Если все хорошо, переводим на страницу самого чата
