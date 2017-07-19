@@ -15,13 +15,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 /**
- * Controller for {@link net.webChat.registration.model.User}'s pages.
+ * ChatController for {@link net.webChat.registration.model.User}'s pages.
  */
 
 @Controller
@@ -86,6 +85,7 @@ public class UserController {
     public String welcome(Model model) {
         List<Message> allInstanceMessages = messageService.getAllMessages ();
         List<User> allInstanceUsers = userService.getAllUsers ();
+        Collections.reverse (allInstanceMessages);//что-бы новые сообщения были вверху страницы
         model.addAttribute ("allInstanceUsers", allInstanceUsers);//jsp увидит поля всех инстансов User
         model.addAttribute ("allInstanceMessages", allInstanceMessages);//jsp увидит поля всех инстансов Message
         model.addAttribute ("messageForm", new Message ());//отправляем в конструктор

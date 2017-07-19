@@ -142,8 +142,8 @@
 }
 .chat_area {
     float: left;
-    height: 300px;
-    overflow-x: hidden;
+    height: 500px;
+    overflow-x: auto;
     overflow-y: auto;
     width: 100%;
 }

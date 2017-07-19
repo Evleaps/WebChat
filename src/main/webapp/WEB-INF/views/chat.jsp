@@ -51,12 +51,13 @@
                 </c:if>
             </ul>
 
+           <%--ПОИСК СООБЩЕНИЙ
             <form class="navbar-form navbar-right" role="search">
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="Search message..">
                 </div>
                 <button type="submit" class="btn btn-default">Search</button>
-            </form>
+            </form>--%>
         </div>
     </div>
 
@@ -87,14 +88,14 @@
                         <ul class="list-unstyled">
                             <%--Вывод всех пользователей из БД--%>
                             <c:forEach items="${allInstanceUsers}" var="allInstanceUsers">
-                            <li class="left clearfix">
-                                <span class="chat-img pull-left"></span>
-                                <div class="chat-body clearfix">
-                                    <div class="header_sec">
-                                        <strong class="primary-font">${allInstanceUsers.username}</strong>
+                                <li class="left clearfix">
+                                    <span class="chat-img pull-left"></span>
+                                    <div class="chat-body clearfix">
+                                        <div class="header_sec">
+                                            <strong class="primary-font">${allInstanceUsers.username}</strong>
+                                        </div>
                                     </div>
-                                </div>
-                            </li>
+                                </li>
                             </c:forEach>
                         </ul>
                     </div>
@@ -109,23 +110,19 @@
                 <div class="row">
                     <div class="chat_area">
                         <ul class="list-unstyled">
-                            <li class="left clearfix">
-
-                                <%--items мы указываем параметр из метода GET в контроллере, присваиваем ему имя
+                            <%--items мы указываем параметр из метода GET в контроллере, присваиваем ему имя
                                var="" по которому мы можем обращаться к полям нашего акласса
                                Соответственно будут выведены поля класса каждого инстанса пока они не закончатся--%>
-                                <c:forEach items="${allInstanceMessages}" var="allInstanceMessages">
-                                <span class="chat-img1 pull-left"></span>
-                                <div class="chat-body1 clearfix">
-                                    <p><b>${allInstanceMessages.username}</b>
-                                        <br>${allInstanceMessages.message}</p>
-                                    <div class="chat_time pull-right">${allInstanceMessages.date}</div>
-                                </div>
-                            </li>
-                            <li class="left clearfix">
-                                <span class="chat-img1 pull-left"></span>
-                                </c:forEach>
-                            </li>
+                            <c:forEach items="${allInstanceMessages}" var="allInstanceMessages">
+                                <li class="left clearfix">
+                                    <span class="chat-img1 pull-left"></span>
+                                    <div class="chat-body1 clearfix">
+                                        <p><b>${allInstanceMessages.username}</b>
+                                            <br>${allInstanceMessages.message}</p>
+                                        <div class="chat_time pull-right">${allInstanceMessages.date}</div>
+                                    </div>
+                                </li>
+                            </c:forEach>
                         </ul>
                     </div><!--chat_area-->
                     <%--Форма для отображения сообщений КОНЕЦ--%>
@@ -135,7 +132,7 @@
                     ModelAttribyte должен быть прописан и в GET и в POST, что бы знать, куда отправлять и откуда брать--%>
                     <form:form action="/chat" method="POST" modelAttribute="messageForm">
                         <div class="message_write">
-                            <form:textarea path="message" class="form-control"
+                            <form:textarea resize="none" path="message" class="form-control"
                                            placeholder="Your message.."/><%--все параметры прописываются внутри формы--%>
                             <div class="clearfix"></div>
                             <div class="chat_bottom">
